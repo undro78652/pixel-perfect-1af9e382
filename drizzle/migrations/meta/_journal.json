@@ -15,6 +15,13 @@
       "when": 1791419516748,
       "tag": "0001_finance_core",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791419777431,
+      "tag": "0002_dues_expenses_community",
+      "breakpoints": true
     }
   ]
 }

@@ -148,6 +148,53 @@ export type Database = {
           },
         ]
       }
+      comments: {
+        Row: {
+          author: string
+          body: string
+          created_at: string
+          deleted_at: string | null
+          edited_at: string | null
+          id: string
+          moderated_reason: string | null
+          parent_id: string | null
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          author: string
+          body: string
+          created_at?: string
+          deleted_at?: string | null
+          edited_at?: string | null
+          id?: string
+          moderated_reason?: string | null
+          parent_id?: string | null
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          author?: string
+          body?: string
+          created_at?: string
+          deleted_at?: string | null
+          edited_at?: string | null
+          id?: string
+          moderated_reason?: string | null
+          parent_id?: string | null
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       expenses: {
         Row: {
           amount_paise: number
@@ -439,6 +486,118 @@ export type Database = {
           },
         ]
       }
+      issue_history: {
+        Row: {
+          action: string
+          actor: string | null
+          created_at: string
+          from_value: string | null
+          id: number
+          issue_id: string
+          reason: string | null
+          to_value: string | null
+        }
+        Insert: {
+          action: string
+          actor?: string | null
+          created_at?: string
+          from_value?: string | null
+          id?: number
+          issue_id: string
+          reason?: string | null
+          to_value?: string | null
+        }
+        Update: {
+          action?: string
+          actor?: string | null
+          created_at?: string
+          from_value?: string | null
+          id?: number
+          issue_id?: string
+          reason?: string | null
+          to_value?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issue_history_issue_id_fkey"
+            columns: ["issue_id"]
+            isOneToOne: false
+            referencedRelation: "issues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      issues: {
+        Row: {
+          assignee: string | null
+          author: string
+          category: string
+          closure_note: string | null
+          created_at: string
+          description: string
+          id: string
+          is_demo: boolean
+          kind: string
+          location: string | null
+          photos: string[]
+          priority: string
+          project_id: string | null
+          ref: string
+          reopen_request_note: string | null
+          reopen_requested_at: string | null
+          status: string
+          title: string
+        }
+        Insert: {
+          assignee?: string | null
+          author: string
+          category?: string
+          closure_note?: string | null
+          created_at?: string
+          description: string
+          id?: string
+          is_demo?: boolean
+          kind: string
+          location?: string | null
+          photos?: string[]
+          priority?: string
+          project_id?: string | null
+          ref?: string
+          reopen_request_note?: string | null
+          reopen_requested_at?: string | null
+          status?: string
+          title: string
+        }
+        Update: {
+          assignee?: string | null
+          author?: string
+          category?: string
+          closure_note?: string | null
+          created_at?: string
+          description?: string
+          id?: string
+          is_demo?: boolean
+          kind?: string
+          location?: string | null
+          photos?: string[]
+          priority?: string
+          project_id?: string | null
+          ref?: string
+          reopen_request_note?: string | null
+          reopen_requested_at?: string | null
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "issues_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ledger_entries: {
         Row: {
           account_id: string
@@ -675,6 +834,41 @@ export type Database = {
         }
         Relationships: []
       }
+      project_photos: {
+        Row: {
+          added_by: string | null
+          caption: string | null
+          created_at: string
+          id: string
+          path: string
+          project_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          caption?: string | null
+          created_at?: string
+          id?: string
+          path: string
+          project_id: string
+        }
+        Update: {
+          added_by?: string | null
+          caption?: string | null
+          created_at?: string
+          id?: string
+          path?: string
+          project_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_photos_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           archived: boolean
@@ -720,6 +914,30 @@ export type Database = {
           status?: string
           target_date?: string | null
           title?: string
+        }
+        Relationships: []
+      }
+      reactions: {
+        Row: {
+          created_at: string
+          target_id: string
+          target_type: string
+          user_id: string
+          value: number
+        }
+        Insert: {
+          created_at?: string
+          target_id: string
+          target_type: string
+          user_id: string
+          value: number
+        }
+        Update: {
+          created_at?: string
+          target_id?: string
+          target_type?: string
+          user_id?: string
+          value?: number
         }
         Relationships: []
       }
@@ -1059,6 +1277,85 @@ export type Database = {
             columns: ["txn_id"]
             isOneToOne: false
             referencedRelation: "v_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      update_revisions: {
+        Row: {
+          body: string | null
+          created_at: string
+          edited_by: string | null
+          id: number
+          title: string | null
+          update_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          edited_by?: string | null
+          id?: number
+          title?: string | null
+          update_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          edited_by?: string | null
+          id?: number
+          title?: string | null
+          update_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "update_revisions_update_id_fkey"
+            columns: ["update_id"]
+            isOneToOne: false
+            referencedRelation: "updates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      updates: {
+        Row: {
+          archived_at: string | null
+          body: string
+          created_at: string
+          edited_at: string | null
+          id: string
+          is_demo: boolean
+          project_id: string | null
+          published_by: string
+          title: string
+        }
+        Insert: {
+          archived_at?: string | null
+          body: string
+          created_at?: string
+          edited_at?: string | null
+          id?: string
+          is_demo?: boolean
+          project_id?: string | null
+          published_by: string
+          title: string
+        }
+        Update: {
+          archived_at?: string | null
+          body?: string
+          created_at?: string
+          edited_at?: string | null
+          id?: string
+          is_demo?: boolean
+          project_id?: string | null
+          published_by?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "updates_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
             referencedColumns: ["id"]
           },
         ]
@@ -1528,6 +1825,10 @@ export type Database = {
         Args: { _kind: string; _uid: string }
         Returns: boolean
       }
+      _issue_perm: {
+        Args: { _action: string; _kind: string }
+        Returns: boolean
+      }
       _notify: {
         Args: {
           _body: string
@@ -1587,6 +1888,18 @@ export type Database = {
         Args: { _relation: string; _token: string }
         Returns: string
       }
+      add_comment: {
+        Args: { _body: string; _parent: string; _target: string; _type: string }
+        Returns: string
+      }
+      add_house_to_charge: {
+        Args: { _charge: string; _house: string; _reason: string }
+        Returns: undefined
+      }
+      add_project_photo: {
+        Args: { _caption: string; _path: string; _project: string }
+        Returns: undefined
+      }
       attach_provisioned_member: {
         Args: {
           _house: string
@@ -1611,6 +1924,11 @@ export type Database = {
         }
         Returns: undefined
       }
+      create_charge: {
+        Args: { _house_ids: string[]; _p: Json }
+        Returns: string
+      }
+      create_expense: { Args: { _p: Json }; Returns: string }
       create_fund_account: {
         Args: {
           _bank_name: string
@@ -1636,7 +1954,17 @@ export type Database = {
         Args: { _days: number; _house: string }
         Returns: string
       }
+      create_issue: { Args: { _p: Json }; Returns: string }
       create_transaction: { Args: { _p: Json }; Returns: string }
+      decide_expense: {
+        Args: {
+          _approve: boolean
+          _approved: number
+          _exp: string
+          _reason: string
+        }
+        Returns: undefined
+      }
       decide_house_request: {
         Args: { _approve: boolean; _reason: string; _req: string }
         Returns: undefined
@@ -1654,11 +1982,20 @@ export type Database = {
         }
         Returns: string
       }
+      edit_comment: {
+        Args: { _body: string; _delete: boolean; _id: string }
+        Returns: undefined
+      }
       edit_transaction: { Args: { _p: Json; _txn: string }; Returns: undefined }
+      edit_update: {
+        Args: { _archive: boolean; _body: string; _id: string; _title: string }
+        Returns: undefined
+      }
       end_membership: {
         Args: { _membership: string; _reason: string }
         Returns: undefined
       }
+      generate_maintenance: { Args: never; Returns: number }
       has_perm: { Args: { _perm: string; _uid: string }; Returns: boolean }
       has_role: {
         Args: { _role: Database["public"]["Enums"]["app_role"]; _uid: string }
@@ -1671,6 +2008,10 @@ export type Database = {
         Args: { _house: string; _uid: string }
         Returns: boolean
       }
+      issue_action: {
+        Args: { _action: string; _id: string; _reason: string; _value: string }
+        Returns: undefined
+      }
       log_password_reset: {
         Args: { _reason: string; _user: string }
         Returns: undefined
@@ -1679,8 +2020,16 @@ export type Database = {
         Args: { _action: string; _id: string }
         Returns: undefined
       }
+      moderate_comment: {
+        Args: { _id: string; _reason: string }
+        Returns: undefined
+      }
       my_house_id: { Args: { _uid: string }; Returns: string }
       normalize_mobile: { Args: { _m: string }; Returns: string }
+      publish_update: {
+        Args: { _body: string; _project: string; _title: string }
+        Returns: string
+      }
       request_house_membership: {
         Args: { _house_number: string; _relation: string }
         Returns: string
@@ -1700,6 +2049,7 @@ export type Database = {
         Returns: string
       }
       revoke_invitation: { Args: { _inv: string }; Returns: undefined }
+      save_project: { Args: { _id: string; _p: Json }; Returns: string }
       set_account_status: {
         Args: {
           _reason: string
@@ -1716,8 +2066,22 @@ export type Database = {
         Args: { _is_admin: boolean; _membership: string; _primary: boolean }
         Returns: undefined
       }
+      set_maintenance: {
+        Args: {
+          _amount: number
+          _due_day: number
+          _enabled: boolean
+          _first_month: string
+          _house_ids: string[]
+        }
+        Returns: undefined
+      }
       set_manager_permissions: {
         Args: { _perms: string[]; _user: string }
+        Returns: undefined
+      }
+      set_reaction: {
+        Args: { _target: string; _type: string; _value: number }
         Returns: undefined
       }
       set_role: {
@@ -1735,6 +2099,10 @@ export type Database = {
       update_my_profile: { Args: { _full_name: string }; Returns: undefined }
       update_settings: {
         Args: { _address: string; _invite_days: number; _name: string }
+        Returns: undefined
+      }
+      waive_assessment: {
+        Args: { _amount: number; _assessment: string; _reason: string }
         Returns: undefined
       }
     }
