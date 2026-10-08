@@ -50,6 +50,226 @@ export type Database = {
         }
         Relationships: []
       }
+      charge_assessments: {
+        Row: {
+          amount_paise: number
+          charge_id: string
+          created_at: string
+          house_id: string
+          id: string
+        }
+        Insert: {
+          amount_paise: number
+          charge_id: string
+          created_at?: string
+          house_id: string
+          id?: string
+        }
+        Update: {
+          amount_paise?: number
+          charge_id?: string
+          created_at?: string
+          house_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "charge_assessments_charge_id_fkey"
+            columns: ["charge_id"]
+            isOneToOne: false
+            referencedRelation: "charges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "charge_assessments_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      charges: {
+        Row: {
+          amount_paise: number
+          assessment_date: string
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          idempotency_key: string | null
+          is_demo: boolean
+          maintenance_period: string | null
+          project_id: string | null
+          purpose: string | null
+          title: string
+        }
+        Insert: {
+          amount_paise: number
+          assessment_date?: string
+          category: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          idempotency_key?: string | null
+          is_demo?: boolean
+          maintenance_period?: string | null
+          project_id?: string | null
+          purpose?: string | null
+          title: string
+        }
+        Update: {
+          amount_paise?: number
+          assessment_date?: string
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          idempotency_key?: string | null
+          is_demo?: boolean
+          maintenance_period?: string | null
+          project_id?: string | null
+          purpose?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "charges_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      expenses: {
+        Row: {
+          amount_paise: number
+          approved_paise: number | null
+          beneficiary: string | null
+          category: string
+          complaint_id: string | null
+          created_at: string
+          decided_at: string | null
+          decided_by: string | null
+          decision_reason: string | null
+          description: string | null
+          evidence: string[]
+          expense_date: string
+          id: string
+          is_demo: boolean
+          item_details: string | null
+          mode: string
+          project_id: string | null
+          quantity: string | null
+          ref: string
+          status: string
+          submitted_by: string
+          supplier: string | null
+          title: string
+        }
+        Insert: {
+          amount_paise: number
+          approved_paise?: number | null
+          beneficiary?: string | null
+          category?: string
+          complaint_id?: string | null
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_reason?: string | null
+          description?: string | null
+          evidence?: string[]
+          expense_date?: string
+          id?: string
+          is_demo?: boolean
+          item_details?: string | null
+          mode: string
+          project_id?: string | null
+          quantity?: string | null
+          ref?: string
+          status?: string
+          submitted_by: string
+          supplier?: string | null
+          title: string
+        }
+        Update: {
+          amount_paise?: number
+          approved_paise?: number | null
+          beneficiary?: string | null
+          category?: string
+          complaint_id?: string | null
+          created_at?: string
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_reason?: string | null
+          description?: string | null
+          evidence?: string[]
+          expense_date?: string
+          id?: string
+          is_demo?: boolean
+          item_details?: string | null
+          mode?: string
+          project_id?: string | null
+          quantity?: string | null
+          ref?: string
+          status?: string
+          submitted_by?: string
+          supplier?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      fund_accounts: {
+        Row: {
+          active: boolean
+          bank_name: string | null
+          created_at: string
+          holder_user: string | null
+          id: string
+          is_demo: boolean
+          kind: string
+          masked_number: string | null
+          name: string
+        }
+        Insert: {
+          active?: boolean
+          bank_name?: string | null
+          created_at?: string
+          holder_user?: string | null
+          id?: string
+          is_demo?: boolean
+          kind: string
+          masked_number?: string | null
+          name: string
+        }
+        Update: {
+          active?: boolean
+          bank_name?: string | null
+          created_at?: string
+          holder_user?: string | null
+          id?: string
+          is_demo?: boolean
+          kind?: string
+          masked_number?: string | null
+          name?: string
+        }
+        Relationships: []
+      }
       house_history: {
         Row: {
           changed_by: string | null
@@ -219,6 +439,92 @@ export type Database = {
           },
         ]
       }
+      ledger_entries: {
+        Row: {
+          account_id: string
+          amount_paise: number
+          created_at: string
+          id: number
+          txn_id: string
+        }
+        Insert: {
+          account_id: string
+          amount_paise: number
+          created_at?: string
+          id?: number
+          txn_id: string
+        }
+        Update: {
+          account_id?: string
+          amount_paise?: number
+          created_at?: string
+          id?: number
+          txn_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ledger_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "fund_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_txn_id_fkey"
+            columns: ["txn_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ledger_entries_txn_id_fkey"
+            columns: ["txn_id"]
+            isOneToOne: false
+            referencedRelation: "v_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenance_config: {
+        Row: {
+          amount_paise: number | null
+          due_day: number
+          enabled: boolean
+          first_month: string | null
+          house_ids: string[]
+          id: number
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          amount_paise?: number | null
+          due_day?: number
+          enabled?: boolean
+          first_month?: string | null
+          house_ids?: string[]
+          id?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          amount_paise?: number | null
+          due_day?: number
+          enabled?: boolean
+          first_month?: string | null
+          house_ids?: string[]
+          id?: number
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       manager_permissions: {
         Row: {
           created_at: string
@@ -369,6 +675,54 @@ export type Database = {
         }
         Relationships: []
       }
+      projects: {
+        Row: {
+          archived: boolean
+          budget_paise: number | null
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_demo: boolean
+          priority: string
+          responsible_manager: string | null
+          status: string
+          target_date: string | null
+          title: string
+        }
+        Insert: {
+          archived?: boolean
+          budget_paise?: number | null
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_demo?: boolean
+          priority?: string
+          responsible_manager?: string | null
+          status?: string
+          target_date?: string | null
+          title: string
+        }
+        Update: {
+          archived?: boolean
+          budget_paise?: number | null
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_demo?: boolean
+          priority?: string
+          responsible_manager?: string | null
+          status?: string
+          target_date?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       society_settings: {
         Row: {
           address: string | null
@@ -396,6 +750,319 @@ export type Database = {
         }
         Relationships: []
       }
+      transactions: {
+        Row: {
+          admin_at: string | null
+          admin_by: string | null
+          admin_reason: string | null
+          admin_status: string
+          amount_paise: number
+          cancel_reason: string | null
+          cancelled_at: string | null
+          created_at: string
+          created_by: string
+          dest_account: string | null
+          duplicate_flag: boolean
+          evidence: string[]
+          expense_id: string | null
+          external_recipient: string | null
+          house_id: string | null
+          id: string
+          idempotency_key: string | null
+          is_demo: boolean
+          posted_at: string | null
+          project_id: string | null
+          purpose: string
+          receiver_at: string | null
+          receiver_by: string | null
+          receiver_kind: string
+          receiver_note: string | null
+          receiver_rev: number | null
+          receiver_status: string
+          receiver_user: string | null
+          ref: string
+          reference_note: string | null
+          reversal_txn: string | null
+          reverse_reason: string | null
+          reversed_at: string | null
+          reverses_txn: string | null
+          revision: number
+          sender_at: string | null
+          sender_by: string | null
+          sender_kind: string
+          sender_note: string | null
+          sender_rev: number | null
+          sender_status: string
+          sender_user: string | null
+          source_account: string | null
+          txn_date: string
+          type: string
+        }
+        Insert: {
+          admin_at?: string | null
+          admin_by?: string | null
+          admin_reason?: string | null
+          admin_status?: string
+          amount_paise: number
+          cancel_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          created_by: string
+          dest_account?: string | null
+          duplicate_flag?: boolean
+          evidence?: string[]
+          expense_id?: string | null
+          external_recipient?: string | null
+          house_id?: string | null
+          id?: string
+          idempotency_key?: string | null
+          is_demo?: boolean
+          posted_at?: string | null
+          project_id?: string | null
+          purpose: string
+          receiver_at?: string | null
+          receiver_by?: string | null
+          receiver_kind: string
+          receiver_note?: string | null
+          receiver_rev?: number | null
+          receiver_status?: string
+          receiver_user?: string | null
+          ref?: string
+          reference_note?: string | null
+          reversal_txn?: string | null
+          reverse_reason?: string | null
+          reversed_at?: string | null
+          reverses_txn?: string | null
+          revision?: number
+          sender_at?: string | null
+          sender_by?: string | null
+          sender_kind: string
+          sender_note?: string | null
+          sender_rev?: number | null
+          sender_status?: string
+          sender_user?: string | null
+          source_account?: string | null
+          txn_date?: string
+          type: string
+        }
+        Update: {
+          admin_at?: string | null
+          admin_by?: string | null
+          admin_reason?: string | null
+          admin_status?: string
+          amount_paise?: number
+          cancel_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string
+          created_by?: string
+          dest_account?: string | null
+          duplicate_flag?: boolean
+          evidence?: string[]
+          expense_id?: string | null
+          external_recipient?: string | null
+          house_id?: string | null
+          id?: string
+          idempotency_key?: string | null
+          is_demo?: boolean
+          posted_at?: string | null
+          project_id?: string | null
+          purpose?: string
+          receiver_at?: string | null
+          receiver_by?: string | null
+          receiver_kind?: string
+          receiver_note?: string | null
+          receiver_rev?: number | null
+          receiver_status?: string
+          receiver_user?: string | null
+          ref?: string
+          reference_note?: string | null
+          reversal_txn?: string | null
+          reverse_reason?: string | null
+          reversed_at?: string | null
+          reverses_txn?: string | null
+          revision?: number
+          sender_at?: string | null
+          sender_by?: string | null
+          sender_kind?: string
+          sender_note?: string | null
+          sender_rev?: number | null
+          sender_status?: string
+          sender_user?: string | null
+          source_account?: string | null
+          txn_date?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_dest_account_fkey"
+            columns: ["dest_account"]
+            isOneToOne: false
+            referencedRelation: "fund_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_dest_account_fkey"
+            columns: ["dest_account"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_expense_id_fkey"
+            columns: ["expense_id"]
+            isOneToOne: false
+            referencedRelation: "expenses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_expense_id_fkey"
+            columns: ["expense_id"]
+            isOneToOne: false
+            referencedRelation: "v_expenses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_reverses_txn_fkey"
+            columns: ["reverses_txn"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_reverses_txn_fkey"
+            columns: ["reverses_txn"]
+            isOneToOne: false
+            referencedRelation: "v_transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_source_account_fkey"
+            columns: ["source_account"]
+            isOneToOne: false
+            referencedRelation: "fund_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_source_account_fkey"
+            columns: ["source_account"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      txn_allocations: {
+        Row: {
+          amount_paise: number
+          assessment_id: string
+          id: string
+          txn_id: string
+        }
+        Insert: {
+          amount_paise: number
+          assessment_id: string
+          id?: string
+          txn_id: string
+        }
+        Update: {
+          amount_paise?: number
+          assessment_id?: string
+          id?: string
+          txn_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "txn_allocations_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "charge_assessments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "txn_allocations_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessment_dues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "txn_allocations_txn_id_fkey"
+            columns: ["txn_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "txn_allocations_txn_id_fkey"
+            columns: ["txn_id"]
+            isOneToOne: false
+            referencedRelation: "v_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      txn_events: {
+        Row: {
+          action: string
+          actor: string | null
+          created_at: string
+          details: Json | null
+          id: number
+          note: string | null
+          revision: number | null
+          txn_id: string
+        }
+        Insert: {
+          action: string
+          actor?: string | null
+          created_at?: string
+          details?: Json | null
+          id?: number
+          note?: string | null
+          revision?: number | null
+          txn_id: string
+        }
+        Update: {
+          action?: string
+          actor?: string | null
+          created_at?: string
+          details?: Json | null
+          id?: number
+          note?: string | null
+          revision?: number | null
+          txn_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "txn_events_txn_id_fkey"
+            columns: ["txn_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "txn_events_txn_id_fkey"
+            columns: ["txn_id"]
+            isOneToOne: false
+            referencedRelation: "v_transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -414,9 +1081,436 @@ export type Database = {
         }
         Relationships: []
       }
+      waivers: {
+        Row: {
+          amount_paise: number
+          assessment_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          reason: string
+        }
+        Insert: {
+          amount_paise: number
+          assessment_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          reason: string
+        }
+        Update: {
+          amount_paise?: number
+          assessment_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          reason?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "waivers_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "charge_assessments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "waivers_assessment_id_fkey"
+            columns: ["assessment_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessment_dues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      v_account_balances: {
+        Row: {
+          active: boolean | null
+          bank_name: string | null
+          created_at: string | null
+          holder_user: string | null
+          id: string | null
+          is_demo: boolean | null
+          kind: string | null
+          masked_number: string | null
+          name: string | null
+          posted_paise: number | null
+          reserved_paise: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          bank_name?: string | null
+          created_at?: string | null
+          holder_user?: string | null
+          id?: string | null
+          is_demo?: boolean | null
+          kind?: string | null
+          masked_number?: string | null
+          name?: string | null
+          posted_paise?: never
+          reserved_paise?: never
+        }
+        Update: {
+          active?: boolean | null
+          bank_name?: string | null
+          created_at?: string | null
+          holder_user?: string | null
+          id?: string | null
+          is_demo?: boolean | null
+          kind?: string | null
+          masked_number?: string | null
+          name?: string | null
+          posted_paise?: never
+          reserved_paise?: never
+        }
+        Relationships: []
+      }
+      v_assessment_dues: {
+        Row: {
+          amount_paise: number | null
+          assessment_date: string | null
+          block: string | null
+          category: string | null
+          charge_id: string | null
+          charge_title: string | null
+          created_at: string | null
+          due_date: string | null
+          house_id: string | null
+          house_number: string | null
+          id: string | null
+          paid_paise: number | null
+          pending_paise: number | null
+          waived_paise: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "charge_assessments_charge_id_fkey"
+            columns: ["charge_id"]
+            isOneToOne: false
+            referencedRelation: "charges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "charge_assessments_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      v_expenses: {
+        Row: {
+          amount_paise: number | null
+          approved_paise: number | null
+          beneficiary: string | null
+          category: string | null
+          complaint_id: string | null
+          created_at: string | null
+          decided_at: string | null
+          decided_by: string | null
+          decision_reason: string | null
+          description: string | null
+          evidence: string[] | null
+          expense_date: string | null
+          id: string | null
+          is_demo: boolean | null
+          item_details: string | null
+          mode: string | null
+          project_id: string | null
+          quantity: string | null
+          ref: string | null
+          reserved_paise: number | null
+          settled_paise: number | null
+          status: string | null
+          submitted_by: string | null
+          supplier: string | null
+          title: string | null
+        }
+        Insert: {
+          amount_paise?: number | null
+          approved_paise?: number | null
+          beneficiary?: string | null
+          category?: string | null
+          complaint_id?: string | null
+          created_at?: string | null
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_reason?: string | null
+          description?: string | null
+          evidence?: string[] | null
+          expense_date?: string | null
+          id?: string | null
+          is_demo?: boolean | null
+          item_details?: string | null
+          mode?: string | null
+          project_id?: string | null
+          quantity?: string | null
+          ref?: string | null
+          reserved_paise?: never
+          settled_paise?: never
+          status?: string | null
+          submitted_by?: string | null
+          supplier?: string | null
+          title?: string | null
+        }
+        Update: {
+          amount_paise?: number | null
+          approved_paise?: number | null
+          beneficiary?: string | null
+          category?: string | null
+          complaint_id?: string | null
+          created_at?: string | null
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_reason?: string | null
+          description?: string | null
+          evidence?: string[] | null
+          expense_date?: string | null
+          id?: string | null
+          is_demo?: boolean | null
+          item_details?: string | null
+          mode?: string | null
+          project_id?: string | null
+          quantity?: string | null
+          ref?: string | null
+          reserved_paise?: never
+          settled_paise?: never
+          status?: string | null
+          submitted_by?: string | null
+          supplier?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expenses_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      v_transactions: {
+        Row: {
+          admin_at: string | null
+          admin_by: string | null
+          admin_reason: string | null
+          admin_status: string | null
+          amount_paise: number | null
+          cancel_reason: string | null
+          cancelled_at: string | null
+          created_at: string | null
+          created_by: string | null
+          dest_account: string | null
+          duplicate_flag: boolean | null
+          evidence: string[] | null
+          expense_id: string | null
+          external_recipient: string | null
+          house_id: string | null
+          id: string | null
+          idempotency_key: string | null
+          is_demo: boolean | null
+          posted_at: string | null
+          project_id: string | null
+          purpose: string | null
+          receiver_at: string | null
+          receiver_by: string | null
+          receiver_kind: string | null
+          receiver_note: string | null
+          receiver_rev: number | null
+          receiver_status: string | null
+          receiver_user: string | null
+          ref: string | null
+          reference_note: string | null
+          reversal_txn: string | null
+          reverse_reason: string | null
+          reversed_at: string | null
+          reverses_txn: string | null
+          revision: number | null
+          sender_at: string | null
+          sender_by: string | null
+          sender_kind: string | null
+          sender_note: string | null
+          sender_rev: number | null
+          sender_status: string | null
+          sender_user: string | null
+          source_account: string | null
+          state: string | null
+          txn_date: string | null
+          type: string | null
+        }
+        Insert: {
+          admin_at?: string | null
+          admin_by?: string | null
+          admin_reason?: string | null
+          admin_status?: string | null
+          amount_paise?: number | null
+          cancel_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          dest_account?: string | null
+          duplicate_flag?: boolean | null
+          evidence?: string[] | null
+          expense_id?: string | null
+          external_recipient?: string | null
+          house_id?: string | null
+          id?: string | null
+          idempotency_key?: string | null
+          is_demo?: boolean | null
+          posted_at?: string | null
+          project_id?: string | null
+          purpose?: string | null
+          receiver_at?: string | null
+          receiver_by?: string | null
+          receiver_kind?: string | null
+          receiver_note?: string | null
+          receiver_rev?: number | null
+          receiver_status?: string | null
+          receiver_user?: string | null
+          ref?: string | null
+          reference_note?: string | null
+          reversal_txn?: string | null
+          reverse_reason?: string | null
+          reversed_at?: string | null
+          reverses_txn?: string | null
+          revision?: number | null
+          sender_at?: string | null
+          sender_by?: string | null
+          sender_kind?: string | null
+          sender_note?: string | null
+          sender_rev?: number | null
+          sender_status?: string | null
+          sender_user?: string | null
+          source_account?: string | null
+          state?: never
+          txn_date?: string | null
+          type?: string | null
+        }
+        Update: {
+          admin_at?: string | null
+          admin_by?: string | null
+          admin_reason?: string | null
+          admin_status?: string | null
+          amount_paise?: number | null
+          cancel_reason?: string | null
+          cancelled_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          dest_account?: string | null
+          duplicate_flag?: boolean | null
+          evidence?: string[] | null
+          expense_id?: string | null
+          external_recipient?: string | null
+          house_id?: string | null
+          id?: string | null
+          idempotency_key?: string | null
+          is_demo?: boolean | null
+          posted_at?: string | null
+          project_id?: string | null
+          purpose?: string | null
+          receiver_at?: string | null
+          receiver_by?: string | null
+          receiver_kind?: string | null
+          receiver_note?: string | null
+          receiver_rev?: number | null
+          receiver_status?: string | null
+          receiver_user?: string | null
+          ref?: string | null
+          reference_note?: string | null
+          reversal_txn?: string | null
+          reverse_reason?: string | null
+          reversed_at?: string | null
+          reverses_txn?: string | null
+          revision?: number | null
+          sender_at?: string | null
+          sender_by?: string | null
+          sender_kind?: string | null
+          sender_note?: string | null
+          sender_rev?: number | null
+          sender_status?: string | null
+          sender_user?: string | null
+          source_account?: string | null
+          state?: never
+          txn_date?: string | null
+          type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_dest_account_fkey"
+            columns: ["dest_account"]
+            isOneToOne: false
+            referencedRelation: "fund_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_dest_account_fkey"
+            columns: ["dest_account"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_expense_id_fkey"
+            columns: ["expense_id"]
+            isOneToOne: false
+            referencedRelation: "expenses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_expense_id_fkey"
+            columns: ["expense_id"]
+            isOneToOne: false
+            referencedRelation: "v_expenses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_house_id_fkey"
+            columns: ["house_id"]
+            isOneToOne: false
+            referencedRelation: "houses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_reverses_txn_fkey"
+            columns: ["reverses_txn"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_reverses_txn_fkey"
+            columns: ["reverses_txn"]
+            isOneToOne: false
+            referencedRelation: "v_transactions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_source_account_fkey"
+            columns: ["source_account"]
+            isOneToOne: false
+            referencedRelation: "fund_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "transactions_source_account_fkey"
+            columns: ["source_account"]
+            isOneToOne: false
+            referencedRelation: "v_account_balances"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       _audit: {
@@ -429,6 +1523,10 @@ export type Database = {
           _reason: string
         }
         Returns: undefined
+      }
+      _can_act_party: {
+        Args: { _kind: string; _uid: string }
+        Returns: boolean
       }
       _notify: {
         Args: {
@@ -448,6 +1546,16 @@ export type Database = {
         Args: { _body: string; _kind: string; _link: string; _title: string }
         Returns: undefined
       }
+      _notify_party: {
+        Args: {
+          _body: string
+          _kind: string
+          _link: string
+          _title: string
+          _uid: string
+        }
+        Returns: undefined
+      }
       _notify_perm: {
         Args: {
           _body: string
@@ -458,9 +1566,23 @@ export type Database = {
         }
         Returns: undefined
       }
+      _outstanding: { Args: { _assessment: string }; Returns: number }
+      _party: { Args: { _acct: string }; Returns: Record<string, unknown> }
+      _posted_balance: { Args: { _acct: string }; Returns: number }
       _require_active: { Args: never; Returns: undefined }
       _require_admin: { Args: never; Returns: undefined }
       _require_perm: { Args: { _perm: string }; Returns: undefined }
+      _reserved: { Args: { _acct: string; _exclude: string }; Returns: number }
+      _txn_event: {
+        Args: {
+          _action: string
+          _details: Json
+          _note: string
+          _rev: number
+          _txn: string
+        }
+        Returns: undefined
+      }
       accept_invitation: {
         Args: { _relation: string; _token: string }
         Returns: string
@@ -474,7 +1596,31 @@ export type Database = {
         }
         Returns: undefined
       }
+      cancel_transaction: {
+        Args: { _reason: string; _txn: string }
+        Returns: undefined
+      }
       clear_must_change_password: { Args: never; Returns: undefined }
+      confirm_transaction: {
+        Args: {
+          _note: string
+          _response: string
+          _revision: number
+          _side: string
+          _txn: string
+        }
+        Returns: undefined
+      }
+      create_fund_account: {
+        Args: {
+          _bank_name: string
+          _holder: string
+          _kind: string
+          _masked: string
+          _name: string
+        }
+        Returns: string
+      }
       create_house: {
         Args: {
           _address: string
@@ -490,6 +1636,7 @@ export type Database = {
         Args: { _days: number; _house: string }
         Returns: string
       }
+      create_transaction: { Args: { _p: Json }; Returns: string }
       decide_house_request: {
         Args: { _approve: boolean; _reason: string; _req: string }
         Returns: undefined
@@ -498,6 +1645,16 @@ export type Database = {
         Args: { _approve: boolean; _membership: string; _reason: string }
         Returns: undefined
       }
+      decide_transaction: {
+        Args: {
+          _approve: boolean
+          _reason: string
+          _revision: number
+          _txn: string
+        }
+        Returns: string
+      }
+      edit_transaction: { Args: { _p: Json; _txn: string }; Returns: undefined }
       end_membership: {
         Args: { _membership: string; _reason: string }
         Returns: undefined
@@ -538,6 +1695,10 @@ export type Database = {
         }
         Returns: string
       }
+      reverse_transaction: {
+        Args: { _reason: string; _txn: string }
+        Returns: string
+      }
       revoke_invitation: { Args: { _inv: string }; Returns: undefined }
       set_account_status: {
         Args: {
@@ -545,6 +1706,10 @@ export type Database = {
           _status: Database["public"]["Enums"]["account_status"]
           _user: string
         }
+        Returns: undefined
+      }
+      set_fund_account_active: {
+        Args: { _acct: string; _active: boolean; _reason: string }
         Returns: undefined
       }
       set_house_admin: {
