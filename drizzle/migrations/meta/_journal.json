@@ -22,6 +22,13 @@
       "when": 1791419777431,
       "tag": "0002_dues_expenses_community",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791419810782,
+      "tag": "0003_enable_cron",
+      "breakpoints": true
     }
   ]
 }
