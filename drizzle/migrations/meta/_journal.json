@@ -8,6 +8,27 @@
       "when": 1791419252561,
       "tag": "0000_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791419516748,
+      "tag": "0001_finance_core",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791419777431,
+      "tag": "0002_dues_expenses_community",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791419810782,
+      "tag": "0003_enable_cron",
+      "breakpoints": true
     }
   ]
 }
